@@ -1,0 +1,51 @@
+
+
+
+
+
+body {
+    font-family: "Source Sans Pro", sans-serif;
+	font-size: 16px;
+    margin: 20px;
+    text-align: center;
+	background: linear-gradient(to right, #B2C0CB, #E2F4FF);
+}
+
+form {
+    display: inline-block;
+    text-align: left;
+    padding: 10px;
+    border: 150px solid #FFDFD3;
+}
+form {
+    display: inline-block;
+    text-align: left;
+    padding: 10px;
+    border: 25px solid #FFDFD3;
+}
+
+label {
+    display: block;
+    margin: 10px 0;
+}
+
+input[type="text"], select {
+    width: 90%;
+    padding: 5px;
+    margin: 5px 0;
+}
+
+input[type="submit"] {
+    background-color: #C0C0C0;
+    color: #000000;
+    border: none;
+    padding: 10px 20px;
+    cursor: pointer;
+}
+
+.button-container {
+    text-align: center;
+	font-weight: bold;
+}
+
+

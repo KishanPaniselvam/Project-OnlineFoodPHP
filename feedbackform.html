@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
+	<title>Web_Feedback_Form</title>
+    <style>
+        body, html {
+            margin: 0;
+            padding: 0;
+        }
+
+        .full-page-animation {
+            width: 100%;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background-color: #B6CDDD;
+            animation: fadeIn 2s ease-in-out forwards;
+        }
+
+        @keyframes fadeIn {
+            0% { opacity: 0; transform: scale(0.5); }
+            100% { opacity: 1; transform: scale(1); }
+        }
+
+        body {
+            padding-top: 40px; /* Adjust this value based on your header's height */
+        }
+
+        .content {
+            text-align: center;
+            color: #031b2b;
+            margin: 20px;
+            padding: 30px;
+        }
+
+        .box {
+            background-color: #cedee8;
+            padding: 20px;
+            text-align: center;
+            font-size: 20px;
+        }
+
+        .rating {
+            cursor: pointer;
+            font-size: 60px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .rating span {
+		color: #ccc; /* Default color for unselected stars */
+            transition: color 0.3s;
+            margin: 0 10px;
+        }
+
+        .feedback-display {
+            font-size: 18px;
+            margin-top: 10px;
+            background-color: #e6eef3;
+            padding: 20px;
+            text-align: center;
+        }
+
+        .image-container {
+            display: inline-block;
+            margin-left: 10px; /* Adjust as needed to control the spacing between the image and the rating */
+        }
+    </style>
+</head>
+<body>
+    <div class="full-page-animation">
+        <div class="content">
+            <h1>Website Feedback Form</h1>
+        </div>
+    </div>
+    <div class="box">
+        <div class="rating" onclick="setRating(event)">
+            <span data-rating="1">✯</span>
+            <span data-rating="2">✯</span>
+            <span data-rating="3">✯</span>
+            <span data-rating="4">✯</span>
+            <span data-rating="5">✯</span>
+        </div>
+        <div class="image-container">
+            <img src="rating.png" alt="Image Description">
+        </div>
+        <p>Your rating: <span id="selectedRating">0</span> stars</p>
+        <textarea id="feedbackText" rows="4" placeholder="Enter your feedback"></textarea>
+        <button type="button" onclick="submitFeedback()">Submit</button>
+    </div>
+
+    <div class="feedback-display" id="feedbackDisplay">
+        <!-- Feedback will be displayed here -->
+    </div>
+
+    <script>
+    let selectedRating = 0;
+
+    function setRating(event) {
+        const selectedStar = event.target.getAttribute('data-rating');
+        selectedRating = parseInt(selectedStar);
+        document.getElementById('selectedRating').textContent = selectedRating;
+
+        const stars = document.querySelectorAll('.rating span');
+        stars.forEach((star, index) => {
+            if (index < selectedRating) {
+                star.style.color = '#080807'; // Change color for selected stars
+            } else {
+                star.style.color = '#ccc'; // Reset color for unselected stars
+            }
+        });
+    }
+
+    function submitFeedback() {
+        const feedbackText = document.getElementById('feedbackText').value;
+
+        if (selectedRating === 0 || feedbackText === '') {
+            alert('Please select a rating and enter feedback.');
+            return;
+        }
+
+        const feedback = {
+            rating: selectedRating,
+            text: feedbackText,
+            timestamp: new Date().toLocaleString(),
+        };
+
+        const feedbacks = JSON.parse(localStorage.getItem('feedbacks')) || [];
+        feedbacks.push(feedback);
+        localStorage.setItem('feedbacks', JSON.stringify(feedbacks));
+
+        displayFeedback(feedback);
+
+        selectedRating = 0;
+        document.getElementById('selectedRating').textContent = selectedRating;
+        document.getElementById('feedbackText').value = ''; // Clear textarea
+
+        // Reset star colors to default (5 stars)
+        const stars = document.querySelectorAll('.rating span');
+        stars.forEach((star, index) => {
+            if (index < 5) {
+                star.style.color = '#080807'; // Set default color for 5 stars
+            } else {
+                star.style.color = '#ccc'; // Reset color for unselected stars
+            }
+        });
+    }
+
+    function displayFeedback(feedback) {
+        const feedbackDisplay = document.getElementById('feedbackDisplay');
+        const feedbackItem = document.createElement('div');
+        feedbackItem.innerHTML = `
+            <p>✤ Rating: ${feedback.rating} stars</p>
+            <p>Feedback: ${feedback.text}</p>
+            <p>Submitted on: ${feedback.timestamp}</p>
+        `;
+        feedbackDisplay.appendChild(feedbackItem);
+    }
+
+    const savedFeedbacks = JSON.parse(localStorage.getItem('feedbacks')) || [];
+    savedFeedbacks.forEach(displayFeedback);
+
+    // Simulate click on the 5th star for default rating
+    window.addEventListener('DOMContentLoaded', () => {
+        const fifthStar = document.querySelector('.rating span[data-rating="5"]');
+        if (fifthStar) {
+            fifthStar.click();
+        }
+    });
+</script>
+
+</body>
+</html>

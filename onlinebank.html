@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Online Banking</title>
+    <link rel="stylesheet" type="text/css" href="styleob.css">
+</head>
+<body>
+    <h1>Online Banking</h1>
+	
+    <form method="post" action="process.php">
+        <label for="bank">Select Bank:</label>
+        <select name="bank" required>
+            <option value="bank1">Zooflix Savings Bank</option>
+            <option value="bank2">Aquamotion Financial</option>
+            <option value="bank3">Astroverse Bank of Commerce</option>
+			<option value="bank4">Whimsyland Credit Union</option>
+			<option value="bank5">Magitopia Mutual</option>
+			<option value="bank6">Dragofusion Financial Group</option>
+			<option value="bank7">Celestria Capital</option>
+			<option value="bank8">Lunarion Savings & Loan</option>
+			<option value="bank9">Mythoria Investments</option>
+			<option value="bank10">Metamagix Capital</option>
+        </select>
+        <br>
+        <label for="account_number">Account Number:</label>
+        <input type="text" name="account_number" maxlength="16" placeholder="0000-0000-0000-0000" required>
+        <br>
+        <label for="name">Pin Number:</label>
+        <input type="text" name="pin_number"  placeholder="******" maxlength="6" required>
+        <br>
+		<br>
+		<div class="button-container">
+        <input type="submit" value="Submit">
+		</div>
+    </form>
+</body>
+</html>
+
